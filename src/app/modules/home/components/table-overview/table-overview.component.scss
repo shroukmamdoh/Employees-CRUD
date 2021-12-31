@@ -1,0 +1,83 @@
+@import "../../../../styles/variables";
+
+.table-header {
+  background-color: $main-color;
+  .title {
+    @include base-font(28px, 500, normal, $white);
+  }
+}
+table {
+  width: 100%;
+  thead {
+    th {
+      @include base-font(18px, 500, normal);
+    }
+  }
+  tbody {
+    tr {
+      @include base-font(16px, bormal, normal, $sec-font-color);
+    }
+  }
+  td.actions {
+    span {
+      cursor: pointer;
+    }
+    span.update {
+      margin-right: 16px;
+      svg {
+        path {
+          fill: $warning-color;
+        }
+      }
+    }
+    span.delete {
+      svg {
+        path {
+          fill: $danger-color;
+        }
+      }
+    }
+  }
+}
+
+.wrapper {
+  margin-top: 32px;
+  .actions {
+    @include base-font(18px, 500, normal, $white);
+    span {
+      svg {
+        path {
+          fill: $white;
+        }
+      }
+    }
+  }
+}
+
+.modal-body {
+  .content {
+    text-align: left;
+    padding-top: 18px;
+    .warning {
+      margin-top: 28px;
+      @include base-font(14px, 500, normal, $warning-color);
+    }
+  }
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    background: #dee2e6;
+    padding: 32px;
+    margin-bottom: -16px;
+    margin-right: -16px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-left: -16px;
+    margin-top: 42px;
+  }
+}
+
+.no-data {
+  text-align: center;
+  padding: 16px;
+}

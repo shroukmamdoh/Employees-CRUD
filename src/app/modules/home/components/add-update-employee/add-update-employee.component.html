@@ -1,0 +1,82 @@
+<form [formGroup]="employeeForm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="empName">
+                    name
+                    <span class="text-danger">*</span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="employee.empName" formControlName="empName"
+                    [class.invalid]="isValidators('empName')" placeholder="name" />
+                <div class="text-danger" *ngIf="isValidators('empName')">
+                    name is required
+                </div>
+                <div class="text-danger" *ngIf="employeeForm.controls['empName'].errors?.pattern">
+                    name is not valid
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="empEmail">
+                    Email
+                    <span class="text-danger">*</span>
+                </label>
+                <input type="email" class="form-control" [(ngModel)]="employee.empEmail" formControlName="empEmail"
+                    [class.invalid]="isValidators('empEmail')" placeholder="email" />
+                <div class="text-danger" *ngIf="isValidators('empEmail')">
+                    email is required
+                </div>
+                <div class="text-danger"
+                    *ngIf="employeeForm.controls['empEmail'].touched && employeeForm.controls['empEmail'].errors">
+                    email is not valid
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="empAddress">
+                    Address
+                    <span class="text-danger">*</span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="employee.empAddress" formControlName="empAddress"
+                    [class.invalid]="isValidators('empAddress')" placeholder="address" />
+                <div class="text-danger" *ngIf="isValidators('empAddress')">
+                    address is required
+                </div>
+                <div class="text-danger" *ngIf="employeeForm.controls['empAddress'].errors?.pattern">
+                    address is not valid
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="empPhone">Phone<span class="text-danger">*</span></label>
+                <input type="tel" pattern="^01[0-2]\d{1,8}$" class="form-control" [(ngModel)]="employee.empPhone"
+                    formControlName="empPhone" [class.invalid]="isValidators('empPhone')" placeholder="phone">
+                <div class="text-danger" *ngIf="isValidators('empPhone')  ">
+                    phone is required
+                </div>
+                <div class="text-danger"
+                    *ngIf="employeeForm.controls['empPhone'].touched && employeeForm.controls['empPhone'].errors">
+                    phone is not valid
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="footer text-left">
+    <button type="button" class="btn btn-light mr-3" (click)="decline()">Cancel</button>
+    <button class="btn btn-success mrg-right-10" *ngIf="isUpdateForm" (click)="update()"
+        [disabled]="!employeeForm.valid || !employeeForm.dirty || actionLoading">
+        Save
+    </button>
+
+    <button class="btn btn-success mrg-right-10" *ngIf="!isUpdateForm" [disabled]="employeeForm.invalid || actionLoading"
+        (click)="add()">
+        Add
+    </button>
+</div>

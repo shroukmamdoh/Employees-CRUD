@@ -1,0 +1,157 @@
+<div class="container wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    <ng-container>
+                        <div class="table-header d-flex justify-content-between px-4 py-3">
+                            <div class="title">
+                                Manage Employees
+                            </div>
+                            <div class="actions">
+                                <button type="button" class="btn btn-danger">TO DO</button>
+                                <button class="btn btn-success ml-2" (click)="openUpdateModal(updateTemplate, false)">
+                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                        </svg></span>
+                                    <span>
+                                        Add new Employee
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="loader d-flex justify-content-center p-3" *ngIf="loading">
+                            <div class="spinner-border text-primary" role="status">
+                            </div>
+                        </div>
+                        <div class="table-responsive" *ngIf="!loading">
+                            <div class="no-data" *ngIf="!returnedArray.length">No employees found</div>
+                            <ng-container *ngIf="returnedArray.length">
+                                <table class="table  table-stripeS">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Email
+                                            </th>
+                                            <th>
+                                                Address
+                                            </th>
+                                            <th>
+                                                Phone
+                                            </th>
+                                            <th>
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="itemRow" *ngFor="let item of returnedArray   ; let i=index;">
+                                            <td class="ar-font" class="itemRowData">
+                                                <div class="row col-md-12">
+                                                    {{item.empName}}
+                                                </div>
+                                            </td>
+                                            <td class="itemRowData">
+                                                {{item.empEmail}}
+                                            </td>
+                                            <td class="itemRowData">
+                                                {{item.empAddress}}
+                                            </td>
+                                            <td class="itemRowData">
+                                                {{item.empPhone}}
+                                            </td>
+                                            <td class="actions">
+                                                <span
+                                                    (click)="openUpdateModal(updateTemplate, true); employee = item; empId = item.empId"
+                                                    class="update">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
+                                                    </svg>
+                                                </span>
+                                                <span (click)="openModal(template,item.empId)" class="delete">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-trash-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                    </svg>
+                                                </span>
+                                                <ng-template #template>
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title pull-left">Delete Employee</h4>
+                                                        <button type="button" class="btn-close close pull-right"
+                                                            aria-label="Close" (click)="decline()">
+                                                            <span aria-hidden="true"
+                                                                class="visually-hidden">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        <div class="content">
+                                                            <p>Are you sure you want to delete these Records ?</p>
+                                                            <p class="warning">This action cannot be undone.</p>
+                                                        </div>
+                                                        <div class="footer">
+                                                            <button type="button" class="btn btn-light mr-3"
+                                                                (click)="decline()">Cancel</button>
+                                                            <button type="button" class="btn btn-danger"
+                                                                (click)="deleteEmployee(item.empId)">Delete</button>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-container>
+                        </div>
+                        <div class="table-responsive text-nowrap">
+                            <table class="searchCell">
+                                <tbody>
+                                    <tr>
+                                        <td class="itemTotal pl-3">
+                                         {{employees.length}} entries
+                                        </td>
+                                        <td colspan="3">
+                                            <div class="d-flex justify-content-between align-items-center pr-3">
+                                                <div class="searchCell">
+                                                </div>
+                                                <div *ngIf="employees" class="paginate">
+                                                    <pagination [totalItems]="employees.length"
+                                                        (pageChanged)="pageChanged($event)"></pagination>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #updateTemplate>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Delete Employee</h4>
+            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="decline()">
+                <span aria-hidden="true" class="visually-hidden">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body text-center" *ngIf="!actionLoading">
+            <app-add-update-employee [employee]="employee" [actionLoading]="actionLoading" [isUpdateForm]="isUpdateForm"
+                (empUpdateChanged)="updateEmployee($event)" (empAddChanged)="AddEmployee($event)"
+                (modalChanged)="decline()"></app-add-update-employee>
+        </div>
+        <div class="loader d-flex justify-content-center p-3" *ngIf="actionLoading">
+            <div class="spinner-border text-primary" role="status">
+            </div>
+        </div>
+    </ng-template>
+</div>
